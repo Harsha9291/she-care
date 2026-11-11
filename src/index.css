@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Poppins", sans-serif;
+  --color-brand: #d6336c;
+  --color-brand2: #ec5f9c;
+  --color-plum: #3b1d4f;
+  --color-lilac: #b388eb;
+  --color-blush: #fdf1f9;
+  --color-blush2: #f6e3f5;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 80px;
+}
+
+body {
+  @apply font-sans text-[#5b4a66] bg-white overflow-x-hidden;
+}
+
+::selection {
+  background: #f9b8d6;
+  color: #3b1d4f;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #fdf1f9;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#d6336c, #b388eb);
+  border-radius: 99px;
+}
+
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(255, 255, 255, 0.75);
+}
+
+.text-grad {
+  background: linear-gradient(90deg, #d6336c, #b388eb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.marquee-track {
+  animation: marquee 32s linear infinite;
+}
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.shine {
+  position: relative;
+  overflow: hidden;
+}
+.shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -120%;
+  width: 60%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.55), transparent);
+  transform: skewX(-20deg);
+  animation: shine 3.5s ease-in-out infinite;
+}
+@keyframes shine {
+  60%,
+  100% {
+    left: 160%;
+  }
+}
