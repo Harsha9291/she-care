@@ -1,96 +1,162 @@
 import { motion } from "framer-motion";
-import { ArrowRight } from "lucide-react";
-import Reveal from "./Reveal";
+import { ArrowRight, Leaf } from "lucide-react";
 
-const PadSVG = ({ accent = "#cfe0ff" }) => (
-  <svg viewBox="0 0 200 90" width="170">
-    <defs>
-      <linearGradient id="pg" x1="0" x2="1">
-        <stop offset="0" stopColor="#fff" />
-        <stop offset="1" stopColor="#f3e8f6" />
-      </linearGradient>
-    </defs>
-    <path d="M10 45c0-22 22-30 40-30h100c18 0 40 8 40 30s-22 30-40 30H50C32 75 10 67 10 45z" fill="url(#pg)" stroke="#ead7f0" strokeWidth="2" />
-    <ellipse cx="100" cy="45" rx="55" ry="14" fill={accent} opacity=".7" />
-  </svg>
-);
+import regularPads from "../assets/regular-pads.png";
+import xlPads from "../assets/xl-pads.png";
+import overnightPads from "../assets/overnight-pads.png";
+import heavyFlowPads from "../assets/heavy-flow-pads.png";
 
-const LinerSVG = () => (
-  <svg viewBox="0 0 200 90" width="170">
-    <path d="M20 45c0-12 14-18 30-18h100c16 0 30 6 30 18s-14 18-30 18H50C34 63 20 57 20 45z" fill="#fff" stroke="#ead7f0" strokeWidth="2" />
-    <ellipse cx="100" cy="45" rx="50" ry="6" fill="#f3e8f6" />
-  </svg>
-);
-
-const PantsSVG = () => (
-  <svg viewBox="0 0 200 120" width="150">
-    <path d="M20 25h160c0 40-25 60-50 78-10 7-20 7-30 0C75 85 20 65 20 25z" fill="#f48fb1" />
-    <path d="M20 25h160v14H20z" fill="#ec6a98" />
-    <ellipse cx="100" cy="75" rx="16" ry="30" fill="#fff" opacity=".35" />
-  </svg>
-);
-
-const EcoSVG = () => (
-  <div className="relative">
-    <PadSVG accent="#d3efdc" />
-    <span className="absolute -top-2 right-0 text-4xl">🍃</span>
-  </div>
-);
-
-const products = [
-  { name: "Sanitary Pads", desc: "Everyday comfort & protection", price: "₹149", art: <PadSVG />, tag: "Bestseller" },
-  { name: "Panty Liners", desc: "Light, fresh & all-day comfort", price: "₹99", art: <LinerSVG />, tag: "Daily" },
-  { name: "Period Pants", desc: "Leak-proof, flexible & worry-free", price: "₹399", art: <PantsSVG />, tag: "New" },
-  { name: "Eco-Friendly Pads", desc: "Sustainable care for a cleaner planet", price: "₹199", art: <EcoSVG />, tag: "Eco" },
+const productCategories = [
+  {
+    id: "regular-pads",
+    number: "01",
+    name: "Regular Sanitary Pads",
+    subtitle: "Everyday Comfort",
+    description:
+      "Designed for everyday period care and your regular flow days.",
+    image: regularPads,
+    tag: "Daily Care",
+  },
+  {
+    id: "xl-pads",
+    number: "02",
+    name: "XL Sanitary Pads",
+    subtitle: "Extra Coverage",
+    description:
+      "Explore an extra-length option for added coverage and comfort.",
+    image: xlPads,
+    tag: "Extra Coverage",
+  },
+  {
+    id: "overnight-pads",
+    number: "03",
+    name: "Overnight Pads",
+    subtitle: "Night-time Care",
+    description:
+      "Discover options designed for comfortable night-time period care.",
+    image: overnightPads,
+    tag: "Night Care",
+  },
+  {
+    id: "heavy-flow-pads",
+    number: "04",
+    name: "Heavy Flow Pads",
+    subtitle: "For Heavy Flow Days",
+    description:
+      "Explore pad options intended for days when your menstrual flow is heavier.",
+    image: heavyFlowPads,
+    tag: "Heavy Flow",
+  },
 ];
 
 export default function Products() {
   return (
-    <section id="products" className="py-22">
-      <div className="mx-auto w-[92%] max-w-300">
-        <Reveal className="mx-auto mb-12 max-w-155 text-center">
-          <span className="mb-3.5 inline-block rounded-full bg-pink-200 px-4 py-1.5 text-[13px] font-semibold text-brand">
-            Our Products
+    <section
+      id="products"
+      className="scroll-mt-20 bg-[#F7FAF3] px-5 py-16 sm:px-8 lg:px-12"
+    >
+      <div className="mx-auto max-w-7xl">
+        {/* HEADING */}
+        <div className="mx-auto mb-12 max-w-2xl text-center">
+          <span className="inline-flex items-center gap-2 rounded-full bg-[#E7F3DF] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#347A38]">
+            <Leaf size={15} />
+            PadKINGO Products
           </span>
-          <h2 className="mb-3 text-[clamp(28px,3.6vw,42px)] font-bold leading-tight text-plum">
-            Find your{" "}
-            <span className="bg-linear-to-r from-brand to-lilac bg-clip-text text-transparent">perfect fit</span>
-          </h2>
-          <p>Everything you need for comfortable, confident days of the month.</p>
-        </Reveal>
 
-        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {products.map((p, i) => (
-            <Reveal key={p.name} delay={i * 0.1}>
-              <motion.article
-                whileHover={{ y: -10, rotateX: 5, rotateY: -5 }}
-                style={{ transformPerspective: 900 }}
-                className="relative h-full rounded-3xl border border-pink-100 bg-white p-6 pt-10 text-center shadow-xl shadow-pink-200/40"
-              >
-                <span className="absolute left-4 top-4 rounded-full bg-pink-200 px-3 py-1 text-[11px] font-semibold text-brand">
-                  {p.tag}
-                </span>
-                <motion.div
-                  whileHover={{ scale: 1.08, rotate: -3 }}
-                  className="mb-3.5 grid h-32.5 place-items-center rounded-[20px] bg-linear-to-br from-blush to-blush2"
-                >
-                  {p.art}
-                </motion.div>
-                <h3 className="mb-2 text-xl font-semibold text-plum">{p.name}</h3>
-                <p className="text-sm">{p.desc}</p>
-                <div className="mt-4 flex items-center justify-between">
-                  <b className="text-xl text-plum">{p.price}</b>
-                  <motion.button
-                    whileHover={{ x: 4, scale: 1.1 }}
-                    whileTap={{ scale: 0.9 }}
-                    aria-label={`View ${p.name}`}
-                    className="grid h-10 w-10 place-items-center rounded-full bg-linear-to-br from-brand to-brand2 text-white"
-                  >
-                    <ArrowRight size={18} />
-                  </motion.button>
+          <h2 className="mt-4 text-3xl font-extrabold text-[#173D25] sm:text-4xl">
+            Find Your Everyday
+            <span className="text-[#68A844]"> Comfort</span>
+          </h2>
+
+          <p className="mt-4 text-sm leading-7 text-gray-600 sm:text-base">
+            Explore our sanitary pad categories and find an option that suits
+            your period care needs.
+          </p>
+        </div>
+
+        {/* ALL PRODUCTS BANNER */}
+        <div
+          id="all-products"
+          className="mb-10 scroll-mt-24 rounded-3xl bg-[#103B23] px-6 py-8 text-white sm:flex sm:items-center sm:justify-between sm:px-9"
+        >
+          <div>
+            <p className="text-xs font-bold uppercase tracking-wider text-[#B8E98A]">
+              Explore Our Range
+            </p>
+
+            <h3 className="mt-2 text-2xl font-extrabold">All Products</h3>
+
+            <p className="mt-2 max-w-xl text-sm leading-6 text-green-100/70">
+              Explore different sanitary pad options for your everyday period
+              care.
+            </p>
+          </div>
+
+          <a
+            href="#regular-pads"
+            className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#B8E98A] px-5 py-3 text-sm font-bold text-[#173D25] transition hover:bg-white sm:mt-0"
+          >
+            Explore Categories
+            <ArrowRight size={16} />
+          </a>
+        </div>
+
+        {/* PRODUCT CARDS */}
+        <div className="grid gap-7 sm:grid-cols-2">
+          {productCategories.map((product, index) => (
+            <motion.article
+              key={product.id}
+              id={product.id}
+              initial={{ opacity: 0, y: 25 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, amount: 0.15 }}
+              transition={{
+                duration: 0.45,
+                delay: index * 0.08,
+              }}
+              className="scroll-mt-24 overflow-hidden rounded-3xl border border-[#E3EBDD] bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+            >
+              {/* PRODUCT IMAGE */}
+              <div className="flex h-[250px] items-center justify-center overflow-hidden bg-[#F7FAF3] p-3 sm:h-[280px]">
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  loading="lazy"
+                  className="h-full w-full rounded-2xl object-contain transition-transform duration-500 hover:scale-105"
+                />
+              </div>
+
+              {/* PRODUCT DETAILS */}
+              <div className="p-6 sm:p-7">
+                <div className="flex items-center justify-between gap-3">
+                  <span className="text-xs font-bold text-[#78A65C]">
+                    {product.number} / {product.subtitle}
+                  </span>
+
+                  <span className="rounded-full bg-[#F0F6EB] px-3 py-1.5 text-[11px] font-bold text-[#568746]">
+                    {product.tag}
+                  </span>
                 </div>
-              </motion.article>
-            </Reveal>
+
+                <h3 className="mt-3 text-xl font-extrabold text-[#173D25]">
+                  {product.name}
+                </h3>
+
+                <p className="mt-3 text-sm leading-7 text-gray-500">
+                  {product.description}
+                </p>
+
+                <div className="mt-5 border-t border-gray-100 pt-5">
+                  <a
+                    href="#contact"
+                    className="inline-flex items-center gap-2 text-sm font-bold text-[#47823A] transition-all hover:gap-3"
+                  >
+                    Know More
+                    <ArrowRight size={16} />
+                  </a>
+                </div>
+              </div>
+            </motion.article>
           ))}
         </div>
       </div>
