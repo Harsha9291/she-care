@@ -53,7 +53,7 @@ export default function Hero() {
           </h1>
 
           <p className="mt-6 max-w-[470px] text-sm leading-7 text-[#34543A] sm:text-base">
-            PadKINGO – India's Herbal Sanitary Pads with Nature's Care, Modern
+            PadKINGOO – India's Herbal Sanitary Pads with Nature's Care, Modern
             Protection and Lasting Freshness.
           </p>
 
@@ -113,7 +113,7 @@ export default function Hero() {
 
           <motion.img
             src={heroDisplay}
-            alt="PadKINGO Herbal Sanitary Pads"
+            alt="PadKINGOO Herbal Sanitary Pads"
             animate={{ y: [0, -12, 0] }}
             transition={{ duration: 5, repeat: Infinity, ease: "easeInOut" }}
             className="relative z-10 mx-auto max-h-[530px] w-full object-contain drop-shadow-[0_25px_25px_rgba(25,90,35,0.2)]"

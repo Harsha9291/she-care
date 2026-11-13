@@ -89,7 +89,7 @@ export default function FlavoursPage() {
           >
             <span className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-5 py-2 text-xs font-bold uppercase tracking-[2px] text-[#C8F0A9]">
               <Leaf size={15} />
-              PadKINGO Herbal Collection
+              PadKINGOO Herbal Collection
             </span>
 
             <h1 className="mt-7 text-4xl font-extrabold leading-tight text-white sm:text-5xl lg:text-6xl">
@@ -100,7 +100,7 @@ export default function FlavoursPage() {
             </h1>
 
             <p className="mx-auto mt-6 max-w-2xl text-sm leading-8 text-green-100/80 sm:text-base">
-              Explore the PadKINGO collection inspired by nature,
+              Explore the PadKINGOO  collection inspired by nature,
               familiar botanical ingredients and refreshing floral themes.
             </p>
 
@@ -213,11 +213,11 @@ export default function FlavoursPage() {
             </div>
 
             <h2 className="mt-5 text-2xl font-extrabold text-white sm:text-3xl">
-              Nature Inspired. PadKINGO Care.
+              Nature Inspired. PadKINGOO Care.
             </h2>
 
             <p className="mx-auto mt-3 max-w-xl text-sm leading-7 text-green-100/75">
-              Explore the PadKINGO collection and discover
+              Explore the PadKINGOO collection and discover
               our range of herbal-inspired flavours.
             </p>
 

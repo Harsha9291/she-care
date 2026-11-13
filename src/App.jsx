@@ -66,7 +66,7 @@ export default function App() {
 
         {/* WHY PADKINGO PAGE */}
         <Route
-          path="/why-padkingo"
+          path="/why-padkingoo"
           element={<WhyChooseUs />}
         />
 

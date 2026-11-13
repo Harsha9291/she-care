@@ -80,7 +80,7 @@ const questions = [
   },
   {
     id: "rating",
-    title: "How do you like PadKINGO?",
+    title: "How do you like PadKINGOO?",
     subtitle: "Rate our brand and product concept.",
     type: "rating",
   },
@@ -130,7 +130,7 @@ export default function Survey() {
     if (step < questions.length - 1) {
       setStep((prev) => prev + 1);
     } else {
-      console.log("PadKINGO Survey:", answers);
+      console.log("PadKINGOO Survey:", answers);
       // Connect backend API here.
       setSubmitted(true);
     }
@@ -180,7 +180,7 @@ export default function Survey() {
             </h3>
 
             <p className="mt-3 text-sm text-green-800/60">
-              Your feedback means a lot to PadKINGO.
+              Your feedback means a lot to PadKINGOO.
             </p>
 
             <button

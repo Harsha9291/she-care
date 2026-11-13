@@ -35,8 +35,8 @@ const navItems = [
     ],
   },
   {
-    label: "Why PadKINGO",
-    href: "/why-padkingo",
+    label: "Why PadKINGOO",
+    href: "/why-padkingoo",
   },
   {
     label: "Learn",

@@ -1,13 +1,13 @@
 import { Mail, Phone, Heart } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
-import logo from "../assets/PadKINGO Herbal Care Logo.png";
+import logo from "../assets/PadKINGO Herbal Care Packagdding.png";
 
 const footerLinks = {
   "Quick Links": [
     { name: "Home", link: "#home" },
     { name: "Our Products", link: "#products" },
     { name: "Our Flavours", link: "#flavours" },
-    { name: "Why PadKINGO", link: "#benefits" },
+    { name: "Why PadKINGOO", link: "#benefits" },
     { name: "Customer Survey", link: "#survey" },
   ],
   "Our Products": [
@@ -41,14 +41,14 @@ export default function Footer() {
             <a href="#home" className="inline-block">
               <img
                 src={logo}
-                alt="PadKINGO Herbal Care"
+                alt="PadKINGOO  Herbal Care"
                 className="h-12 w-auto max-w-[170px] object-contain rounded-md bg-white p-1"
               />
             </a>
 
             <p className="mt-3 max-w-[280px] text-sm leading-6 text-green-100/70">
               Nature-inspired care and comfort for every period. Discover
-              everyday period care with PadKINGO.
+              everyday period care with PadKINGOO .
             </p>
 
             <div className="mt-4 flex gap-2.5">
@@ -92,11 +92,11 @@ export default function Footer() {
         <div className="mt-7 flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <a
-              href="mailto:hello@padkingo.com"
+              href="mailto:hello@PadKINGOO.com"
               className="flex items-center gap-2 text-xs text-green-100/70 hover:text-white"
             >
               <Mail size={14} />
-              hello@padkingo.com
+              hello@PadKINGOO .com
             </a>
 
             <a
@@ -118,7 +118,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-4 border-t border-white/10 pt-4 text-center">
           <p className="text-xs text-green-100/50">
-            © {new Date().getFullYear()} PadKINGO. All Rights Reserved.
+            © {new Date().getFullYear()} PadKINGOO. All Rights Reserved.
           </p>
         </div>
       </div>
