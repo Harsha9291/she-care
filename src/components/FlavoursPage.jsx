@@ -40,16 +40,16 @@ const flavours = [
     bg: "bg-[#FCEBED]",
     number: "03",
   },
-  {
-    id: "turmeric-shield",
-    name: "Turmeric Shield",
-    subtitle: "Inspired by Turmeric",
-    description:
-      "Explore a turmeric-inspired collection rooted in familiar botanical traditions.",
-    image: turmericShield,
-    bg: "bg-[#FFF4DC]",
-    number: "04",
-  },
+  // {
+  //   id: "turmeric-shield",
+  //   name: "Turmeric Shield",
+  //   subtitle: "Inspired by Turmeric",
+  //   description:
+  //     "Explore a turmeric-inspired collection rooted in familiar botanical traditions.",
+  //   image: turmericShield,
+  //   bg: "bg-[#FFF4DC]",
+  //   number: "04",
+  // },
   {
     id: "aloe-vera-soothing",
     name: "Aloe Vera Soothing",

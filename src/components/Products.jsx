@@ -96,8 +96,8 @@ export default function Products() {
             href="#regular-pads"
             className="mt-5 inline-flex items-center gap-2 rounded-full bg-[#B8E98A] px-5 py-3 text-sm font-bold text-[#173D25] transition hover:bg-white sm:mt-0"
           >
-            Explore Categories
-            <ArrowRight size={16} />
+           <span className="text-black">Explore Categories</span> 
+            <ArrowRight color="black" size={16} />
           </a>
         </div>
 

@@ -90,6 +90,12 @@ const questions = [
     subtitle: "Tell us what you would like to improve.",
     type: "textarea",
   },
+  {
+    id: "contact",
+    title: "Connect With Us",
+    subtitle: "Share your details so we can stay in touch.",
+    type: "contact",
+  },
 ];
 
 export default function Survey() {
@@ -121,6 +127,13 @@ export default function Survey() {
   const isValid = () => {
     if (question.type === "multiple") return answer?.length > 0;
     if (question.type === "textarea") return true;
+    if (question.type === "contact") {
+      return (
+        answer?.name?.trim() &&
+        answer?.email?.trim() &&
+        /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answer.email)
+      );
+    }
     return Boolean(answer);
   };
 
@@ -130,8 +143,16 @@ export default function Survey() {
     if (step < questions.length - 1) {
       setStep((prev) => prev + 1);
     } else {
-      console.log("PadKINGOO Survey:", answers);
-      // Connect backend API here.
+      console.log("PadKINGOO Survey Responses:", answers);
+      
+      // Yahan par backend API call kar sakte ho
+      // Example:
+      // await fetch('/api/survey', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(answers)
+      // });
+      
       setSubmitted(true);
     }
   };
@@ -303,6 +324,52 @@ export default function Survey() {
                     placeholder="Write your suggestions here..."
                     className="mt-8 w-full resize-none rounded-xl border border-green-100 bg-white p-5 text-sm outline-none focus:border-green-600"
                   />
+                )}
+
+                {/* Contact Form */}
+                {question.type === "contact" && (
+                  <div className="mt-8 space-y-4">
+                    <input
+                      type="text"
+                      placeholder="Your Name"
+                      value={answer?.name || ""}
+                      onChange={(e) =>
+                        selectAnswer({
+                          ...answer,
+                          name: e.target.value,
+                        })
+                      }
+                      className="w-full rounded-xl border border-green-100 bg-white px-5 py-3.5 text-sm outline-none focus:border-green-600"
+                    />
+
+                    <input
+                      type="number"
+                      placeholder="Phone Number (10 digits) - Optional"
+                      value={answer?.phone || ""}
+                      onChange={(e) =>
+                        selectAnswer({
+                          ...answer,
+                          phone: e.target.value,
+                        })
+                      }
+                      min="0"
+                      max="9999999999"
+                      className="w-full rounded-xl border border-green-100 bg-white px-5 py-3.5 text-sm outline-none focus:border-green-600"
+                    />
+
+                    <input
+                      type="email"
+                      placeholder="Email Address"
+                      value={answer?.email || ""}
+                      onChange={(e) =>
+                        selectAnswer({
+                          ...answer,
+                          email: e.target.value,
+                        })
+                      }
+                      className="w-full rounded-xl border border-green-100 bg-white px-5 py-3.5 text-sm outline-none focus:border-green-600"
+                    />
+                  </div>
                 )}
               </motion.div>
             </AnimatePresence>

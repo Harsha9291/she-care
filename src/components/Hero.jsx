@@ -124,13 +124,13 @@ export default function Hero() {
             transition={{ duration: 4, repeat: Infinity }}
             className="absolute right-0 top-[12%] z-20 hidden items-center gap-2 rounded-2xl border border-white bg-white/90 p-3 shadow-xl sm:flex"
           >
-            <div className="rounded-full bg-green-100 p-2 text-green-700">
+            {/* <div className="rounded-full bg-green-100 p-2 text-green-700">
               <Leaf size={21} />
             </div>
             <div>
               <p className="text-xs font-extrabold text-green-900">Neem Care</p>
               <p className="text-[10px] text-green-700">Nature-inspired care</p>
-            </div>
+            </div> */}
           </motion.div>
         </motion.div>
       </div>

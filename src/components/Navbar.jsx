@@ -29,7 +29,7 @@ const navItems = [
       { name: "Neem Care", href: "/flavours#neem-care" },
       { name: "Lavender Fresh", href: "/flavours#lavender-fresh" },
       { name: "Rose Soft", href: "/flavours#rose-soft" },
-      { name: "Turmeric Shield", href: "/flavours#turmeric-shield" },
+      // { name: "Turmeric Shield", href: "/flavours#turmeric-shield" },
       { name: "Aloe Vera Soothing", href: "/flavours#aloe-vera-soothing" },
       { name: "Mint Cool", href: "/flavours#mint-cool" },
     ],
