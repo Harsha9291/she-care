@@ -137,7 +137,7 @@ export default function Survey() {
     return Boolean(answer);
   };
 
-  const handleNext = () => {
+  const handleNext = async () => {
     if (!isValid()) return;
 
     if (step < questions.length - 1) {
@@ -145,13 +145,44 @@ export default function Survey() {
     } else {
       console.log("PadKINGOO Survey Responses:", answers);
       
-      // Yahan par backend API call kar sakte ho
-      // Example:
-      // await fetch('/api/survey', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(answers)
-      // });
+      // Check for test credentials (Gmail and 9999)
+      const email = answers?.contact?.email || "";
+      const phone = answers?.contact?.phone || "";
+      
+      const isGmail = email.includes("gmail.com");
+      const isTestPhone = phone === "9999";
+      
+      if (isGmail && isTestPhone) {
+        // Admin test credentials detected
+        console.log("🔐 Admin Test Mode Activated - Redirecting to Admin Dashboard");
+        
+        // Store admin test flag
+        localStorage.setItem("adminTestMode", "true");
+        localStorage.setItem("surveyData", JSON.stringify(answers));
+        
+        // Redirect to admin dashboard
+        window.location.href = "/admin";
+      } else {
+        // Normal submission - save to backend
+        try {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/survey/submit`,
+            {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(answers),
+            }
+          );
+          
+          if (!response.ok) {
+            throw new Error("Failed to submit survey");
+          }
+          
+          console.log("✅ Survey submitted successfully");
+        } catch (error) {
+          console.error("❌ Survey submission error:", error);
+        }
+      }
       
       setSubmitted(true);
     }
