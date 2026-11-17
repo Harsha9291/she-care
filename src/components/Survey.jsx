@@ -1,48 +1,60 @@
-
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import {
-  Leaf,
-  ArrowLeft,
-  ArrowRight,
-  Check,
-  Star,
-  Send,
-} from "lucide-react";
+import { Leaf, ArrowLeft, ArrowRight, Check, Star, Send } from "lucide-react";
 
 const questions = [
   {
-    id: "priorities",
-    title: "What matters most to you?",
-    subtitle: "Choose what you look for in a sanitary pad.",
-    type: "multiple",
+    id: "age",
+    title: "What is your age group?",
+    subtitle: "This helps us understand your needs better.",
+    type: "single",
+    options: ["Under 18", "18 – 24", "25 – 34", "35 – 44", "45 and above"],
+  },
+  {
+    id: "usage",
+    title: "How often do you use sanitary pads?",
+    subtitle: "Choose the option that fits you best.",
+    type: "single",
+    options: ["Every period", "Sometimes", "Rarely", "I do not use pads"],
+  },
+  {
+    id: "flow",
+    title: "How is your usual flow?",
+    subtitle: "This helps us suggest the right pad type.",
+    type: "single",
+    options: ["Light", "Moderate", "Heavy", "It varies every month"],
+  },
+  {
+    id: "problem",
+    title: "What problem do you face most with pads?",
+    subtitle: "Choose the issue that bothers you the most.",
+    type: "single",
     options: [
-      "Ultra Soft Comfort",
-      "Leak Protection",
-      "Herbal Ingredients",
-      "Breathable Material",
-      "Affordable Price",
-      "Eco-Friendly",
+      "Leakage",
+      "Rashes or itching",
+      "Discomfort while moving",
+      "Bad smell",
+      "Pad feels too thick",
+      "High price",
     ],
   },
   {
-    id: "flavour",
-    title: "Which flavour would you prefer?",
-    subtitle: "Choose your favourite herbal variant.",
+    id: "priority",
+    title: "What matters most to you in a pad?",
+    subtitle: "Choose one feature that is most important for you.",
     type: "single",
     options: [
-      "Neem Care",
-      "Lavender Fresh",
-      "Rose Soft",
-      "Turmeric Shield",
-      "Aloe Vera",
-      "Mint Cool",
-      "Unscented",
+      "Soft and comfortable",
+      "Strong leak protection",
+      "Herbal / natural ingredients",
+      "Breathable material",
+      "Affordable price",
+      "Eco-friendly",
     ],
   },
   {
     id: "variant",
-    title: "Which pad size do you prefer?",
+    title: "Which pad type would you prefer?",
     subtitle: "Choose the product that suits your needs.",
     type: "single",
     options: [
@@ -50,32 +62,7 @@ const questions = [
       "XL / Extra Long",
       "Overnight",
       "Heavy Flow",
-      "All Variants",
-    ],
-  },
-  {
-    id: "price",
-    title: "What price range suits you?",
-    subtitle: "Help us understand your budget.",
-    type: "single",
-    options: [
-      "Under ₹50",
-      "₹50 – ₹100",
-      "₹100 – ₹150",
-      "₹150 – ₹200",
-      "Above ₹200",
-    ],
-  },
-  {
-    id: "packaging",
-    title: "Which packaging style do you like?",
-    subtitle: "Help us choose our packaging design.",
-    type: "single",
-    options: [
-      "Minimal & Elegant",
-      "Natural & Herbal",
-      "Premium & Luxury",
-      "Simple & Eco-Friendly",
+      "Not sure yet",
     ],
   },
   {
@@ -86,7 +73,7 @@ const questions = [
   },
   {
     id: "suggestion",
-    title: "Any suggestions for us?",
+    title: "Any suggestion for us?",
     subtitle: "Tell us what you would like to improve.",
     type: "textarea",
   },
@@ -114,19 +101,9 @@ export default function Survey() {
     }));
   };
 
-  const toggleAnswer = (value) => {
-    const current = answer || [];
-
-    selectAnswer(
-      current.includes(value)
-        ? current.filter((item) => item !== value)
-        : [...current, value]
-    );
-  };
-
   const isValid = () => {
-    if (question.type === "multiple") return answer?.length > 0;
     if (question.type === "textarea") return true;
+
     if (question.type === "contact") {
       return (
         answer?.name?.trim() &&
@@ -134,6 +111,7 @@ export default function Survey() {
         /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(answer.email)
       );
     }
+
     return Boolean(answer);
   };
 
@@ -142,50 +120,31 @@ export default function Survey() {
 
     if (step < questions.length - 1) {
       setStep((prev) => prev + 1);
-    } else {
-      console.log("PadKINGOO Survey Responses:", answers);
-      
-      // Check for test credentials (Gmail and 9999)
-      const email = answers?.contact?.email || "";
-      const phone = answers?.contact?.phone || "";
-      
-      const isGmail = email.includes("gmail.com");
-      const isTestPhone = phone === "9999";
-      
-      if (isGmail && isTestPhone) {
-        // Admin test credentials detected
-        console.log("🔐 Admin Test Mode Activated - Redirecting to Admin Dashboard");
-        
-        // Store admin test flag
-        localStorage.setItem("adminTestMode", "true");
-        localStorage.setItem("surveyData", JSON.stringify(answers));
-        
-        // Redirect to admin dashboard
-        window.location.href = "/admin";
-      } else {
-        // Normal submission - save to backend
-        try {
-          const response = await fetch(
-            `${import.meta.env.VITE_API_URL || "http://localhost:5000"}/api/survey/submit`,
-            {
-              method: "POST",
-              headers: { "Content-Type": "application/json" },
-              body: JSON.stringify(answers),
-            }
-          );
-          
-          if (!response.ok) {
-            throw new Error("Failed to submit survey");
-          }
-          
-          console.log("✅ Survey submitted successfully");
-        } catch (error) {
-          console.error("❌ Survey submission error:", error);
-        }
-      }
-      
-      setSubmitted(true);
+      return;
     }
+
+    try {
+      const response = await fetch(
+        `${import.meta.env.VITE_API_BASE_URL}survey/submit`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(answers),
+        },
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to submit survey");
+      }
+
+      console.log("Survey submitted successfully");
+    } catch (error) {
+      console.error("Survey submission error:", error);
+    }
+
+    setSubmitted(true);
   };
 
   const resetSurvey = () => {
@@ -195,12 +154,8 @@ export default function Survey() {
   };
 
   return (
-    <section
-      id="survey"
-      className="bg-[#F5FAF0] px-5 py-16 sm:py-20"
-    >
+    <section id="survey" className="bg-[#F5FAF0] px-5 py-16 sm:py-20">
       <div className="mx-auto max-w-[760px]">
-
         {/* Heading */}
         <div className="mb-10 text-center">
           <div className="mb-4 inline-flex items-center gap-2 text-xs font-bold tracking-widest text-green-700">
@@ -216,8 +171,8 @@ export default function Survey() {
           </h2>
 
           <p className="mx-auto mt-4 max-w-lg text-sm leading-6 text-green-900/60">
-            Your feedback helps us understand your needs and
-            create better products for everyday comfort.
+            Your feedback helps us understand your needs and create better
+            products for everyday comfort.
           </p>
         </div>
 
@@ -244,7 +199,6 @@ export default function Survey() {
           </div>
         ) : (
           <div>
-
             {/* Progress */}
             <div className="mb-8 flex items-center justify-between">
               <span className="text-xs font-bold text-green-800">
@@ -282,24 +236,16 @@ export default function Survey() {
                 </p>
 
                 {/* Options */}
-                {(question.type === "single" ||
-                  question.type === "multiple") && (
+                {question.type === "single" && (
                   <div className="mt-8 space-y-3">
                     {question.options.map((option) => {
-                      const active =
-                        question.type === "multiple"
-                          ? (answer || []).includes(option)
-                          : answer === option;
+                      const active = answer === option;
 
                       return (
                         <button
                           key={option}
                           type="button"
-                          onClick={() =>
-                            question.type === "multiple"
-                              ? toggleAnswer(option)
-                              : selectAnswer(option)
-                          }
+                          onClick={() => selectAnswer(option)}
                           className={`flex w-full items-center justify-between rounded-xl border px-5 py-4 text-left text-sm font-semibold transition ${
                             active
                               ? "border-green-600 bg-green-50 text-green-900"
@@ -423,9 +369,7 @@ export default function Survey() {
                 disabled={!isValid()}
                 className="flex items-center gap-2 rounded-full bg-green-800 px-7 py-3.5 text-sm font-bold text-white transition hover:bg-green-700 disabled:opacity-40"
               >
-                {step === questions.length - 1
-                  ? "Submit Feedback"
-                  : "Continue"}
+                {step === questions.length - 1 ? "Submit Feedback" : "Continue"}
 
                 {step === questions.length - 1 ? (
                   <Send size={16} />
