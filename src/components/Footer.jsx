@@ -1,5 +1,7 @@
-import { Mail, Phone, Heart } from "lucide-react";
+import { Mail, Phone, Heart, Download } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
+import QRCode from "qrcode";
+import { useState } from "react";
 import logo from "../assets/PadKINGO Herbal Care Packagdding.png";
 
 const footerLinks = {
@@ -31,6 +33,78 @@ const socialLinks = [
 ];
 
 export default function Footer() {
+  const [isDownloading, setIsDownloading] = useState(false);
+
+  const handleDownloadQR = async () => {
+    try {
+      setIsDownloading(true);
+
+      // Production URL - direct survey page
+      const productionUrl = "https://she-care-frontend-url.onrender.com/#survey";
+      const surveyUrl = productionUrl;
+
+      console.log("QR Survey URL:", surveyUrl);
+
+      // Create canvas for QR with text
+      const canvas = document.createElement("canvas");
+      const ctx = canvas.getContext("2d");
+
+      // QR size
+      const qrSize = 500;
+      const padding = 40;
+      const textHeight = 80;
+      const canvasSize = qrSize + padding * 2 + textHeight;
+
+      canvas.width = canvasSize;
+      canvas.height = canvasSize;
+
+      // White background
+      ctx.fillStyle = "#FFFFFF";
+      ctx.fillRect(0, 0, canvasSize, canvasSize);
+
+      // Generate QR code
+      const qrCanvas = await QRCode.toCanvas(surveyUrl, {
+        errorCorrectionLevel: "H",
+        type: "image/png",
+        quality: 0.95,
+        margin: 1,
+        width: qrSize,
+        color: {
+          dark: "#103B23",
+          light: "#FFFFFF",
+        },
+      });
+
+      // Draw QR code on canvas
+      ctx.drawImage(qrCanvas, padding, padding);
+
+      // Add PadKINGOO text below QR
+      ctx.fillStyle = "#103B23";
+      ctx.font = "bold 48px Arial, sans-serif";
+      ctx.textAlign = "center";
+      ctx.fillText("PadKINGOO", canvasSize / 2, padding + qrSize + 50);
+
+      // Add subtitle
+      ctx.font = "16px Arial, sans-serif";
+      ctx.fillStyle = "#666666";
+      ctx.fillText("Scan to Share Your Feedback", canvasSize / 2, padding + qrSize + 75);
+
+      // Download QR with text
+      canvas.toBlob((blob) => {
+        const link = document.createElement("a");
+        link.href = URL.createObjectURL(blob);
+        link.download = "PadKINGOO-Survey-QR.png";
+        link.click();
+        URL.revokeObjectURL(link.href);
+      });
+
+    } catch (error) {
+      console.error("QR Code generation error:", error);
+    } finally {
+      setIsDownloading(false);
+    }
+  };
+
   return (
     <footer className="bg-[#103B23] text-white">
       <div className="mx-auto max-w-[1400px] px-5 py-9 sm:px-8 lg:px-10">
@@ -105,6 +179,16 @@ export default function Footer() {
               <Phone size={14} />
               Contact Support
             </a>
+
+            <button
+              onClick={handleDownloadQR}
+              disabled={isDownloading}
+              className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-[#B8E98A] to-[#A8D87A] px-5 py-2 text-xs font-bold text-[#103B23] shadow-lg transition hover:shadow-xl hover:scale-105 disabled:opacity-70"
+              title="Download QR code with PadKINGOO Survey"
+            >
+              <Download size={16} />
+              {isDownloading ? "Generating..." : "Download QR"}
+            </button>
           </div>
 
           <p className="flex items-center gap-1 text-xs text-green-100/70">
