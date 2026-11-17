@@ -14,7 +14,6 @@ const footerLinks = {
     { name: "Neem Care", link: "#flavours" },
     { name: "Lavender Fresh", link: "#flavours" },
     { name: "Rose Soft", link: "#flavours" },
-    { name: "Turmeric Shield", link: "#flavours" },
     { name: "Aloe Vera & Mint", link: "#flavours" },
   ],
   "Customer Support": [

@@ -15,10 +15,11 @@ const navItems = [
     href: "/products",
     children: [
       { name: "All Products", href: "/products#all-products" },
-      { name: "Regular Pads", href: "/products#regular-pads" },
-      { name: "XL Sanitary Pads", href: "/products#xl-pads" },
-      { name: "Overnight Pads", href: "/products#overnight-pads" },
-      { name: "Heavy Flow Pads", href: "/products#heavy-flow-pads" },
+      { name: "Sanitary Pads", href: "/products#regular-pads" },
+      { name: "Menstrual Cups", href: "/products#xl-pads" },
+      { name: "Panty Liners", href: "/products#overnight-pads" },
+      { name: "Period Underwear", href: "/products#heavy-flow-pads" },
+      { name: "Tampons", href: "/products#heavy-flow-pads" },
     ],
   },
   {
