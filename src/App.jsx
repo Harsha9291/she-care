@@ -34,7 +34,7 @@ export default function App() {
               <Hero />
 
               {/* Existing Herbal Landing Flavours */}
-              <HerbalFlavours />
+              {/* <HerbalFlavours /> */}
 
               <Survey />
 

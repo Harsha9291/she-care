@@ -2,7 +2,7 @@ import { Mail, Phone, Heart, Download } from "lucide-react";
 import { FaInstagram, FaFacebookF, FaYoutube } from "react-icons/fa";
 import QRCode from "qrcode";
 import { useState } from "react";
-import logo from "../assets/PadKINGO Herbal Care Packagdding.png";
+import logo from "../assets/PadKINGO Herbal Care Logo.png";
 
 const footerLinks = {
   "Quick Links": [
