@@ -1,5 +1,4 @@
-
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Menu,
@@ -10,10 +9,41 @@ import {
   Search,
   User,
   ShoppingCart,
+  TrendingUp,
+  Package,
+  BookOpen,
+  Zap,
+  Clock,
 } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 import logo from "../assets/PadKINGO Herbal Care Logo.png";
+
+// Search data structure
+const searchData = [
+  // Products
+  { id: 1, title: "All Products", category: "Products", href: "/products", icon: Package },
+  { id: 2, title: "Regular Pads", category: "Products", href: "/products#regular-pads", icon: Package },
+  { id: 3, title: "XL Pads", category: "Products", href: "/products#xl-pads", icon: Package },
+  { id: 4, title: "Overnight Pads", category: "Products", href: "/products#overnight-pads", icon: Package },
+  { id: 5, title: "Heavy Flow Pads", category: "Products", href: "/products#heavy-flow-pads", icon: Package },
+  
+  // Flavours
+  { id: 6, title: "Neem Care", category: "Flavours", href: "/flavours#neem-care", icon: Leaf },
+  { id: 7, title: "Lavender Fresh", category: "Flavours", href: "/flavours#lavender-fresh", icon: Leaf },
+  { id: 8, title: "Rose Soft", category: "Flavours", href: "/flavours#rose-soft", icon: Leaf },
+  { id: 9, title: "Turmeric Shield", category: "Flavours", href: "/flavours#turmeric-shield", icon: Leaf },
+  { id: 10, title: "Aloe Vera Soothing", category: "Flavours", href: "/flavours#aloe-vera-soothing", icon: Leaf },
+  { id: 11, title: "Mint Cool", category: "Flavours", href: "/flavours#mint-cool", icon: Leaf },
+  
+  // Pages
+  { id: 12, title: "Why PadKingoo", category: "Pages", href: "/why-padkingoo", icon: TrendingUp },
+  { id: 13, title: "Period Education", category: "Learn", href: "/learn#period-education", icon: BookOpen },
+  { id: 14, title: "Period Care Guide", category: "Learn", href: "/learn#period-care-guide", icon: BookOpen },
+  { id: 15, title: "FAQs", category: "Learn", href: "/learn#faq", icon: BookOpen },
+  { id: 16, title: "Our Story", category: "Learn", href: "/learn#our-story", icon: Zap },
+];
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -42,7 +72,7 @@ const navItems = [
       { name: "Mint Cool", href: "/flavours#mint-cool" },
     ],
   },
-  { label: "Why PadKINGO", href: "/why-padkingoo" },
+  { label: "Why PadKingoo", href: "/why-padkingoo" },
   {
     label: "Learn",
     href: "/learn",
@@ -56,16 +86,56 @@ const navItems = [
 ];
 
 export default function Navbar() {
+  const navigate = useNavigate();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeDropdown, setActiveDropdown] = useState(null);
   const [cartCount] = useState(0);
+  const [searchOpen, setSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const searchInputRef = useRef(null);
 
   const location = useLocation();
+
+  useEffect(() => {
+    // Check if user is logged in
+    const token = Cookies.get("padkingoo_token");
+    setIsLoggedIn(!!token);
+  }, [location]);
 
   const closeMenus = () => {
     setMobileOpen(false);
     setActiveDropdown(null);
   };
+
+  // Search handler
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query.trim() === "") {
+      setSearchResults([]);
+      return;
+    }
+
+    const filtered = searchData.filter((item) =>
+      item.title.toLowerCase().includes(query.toLowerCase()) ||
+      item.category.toLowerCase().includes(query.toLowerCase())
+    );
+    setSearchResults(filtered);
+  };
+
+  const handleSearchResultClick = (href) => {
+    setSearchOpen(false);
+    setSearchQuery("");
+    setSearchResults([]);
+  };
+
+  // Focus search input when opened
+  useEffect(() => {
+    if (searchOpen && searchInputRef.current) {
+      searchInputRef.current.focus();
+    }
+  }, [searchOpen]);
 
   // ACTIVE MENU CHECK
   const isActive = (href) => {
@@ -100,12 +170,15 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-[100] w-full border-b border-green-100/70 bg-white/85 shadow-sm backdrop-blur-xl">
       <div className="mx-auto flex min-h-[72px] w-full max-w-[1500px] items-center justify-between gap-3 px-4 sm:px-6 lg:px-8">
-
         {/* LOGO */}
-        <Link to="/" onClick={closeMenus} className="flex shrink-0 items-center">
+        <Link
+          to="/"
+          onClick={closeMenus}
+          className="flex shrink-0 items-center"
+        >
           <img
             src={logo}
-            alt="PadKINGO Herbal Care for Her"
+            alt="PadKingoo Herbal Care for Her"
             className="h-[46px] w-auto max-w-[170px] object-contain sm:h-[52px] sm:max-w-[200px]"
           />
         </Link>
@@ -116,24 +189,28 @@ export default function Navbar() {
             <div
               key={item.label}
               className="relative"
-              onMouseEnter={() => item.children && setActiveDropdown(item.label)}
+              onMouseEnter={() =>
+                item.children && setActiveDropdown(item.label)
+              }
               onMouseLeave={() => setActiveDropdown(null)}
             >
               <Link
                 to={item.href}
                 onClick={closeMenus}
-                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 xl:px-5 ${isActive(item.href)
+                className={`flex items-center gap-1.5 whitespace-nowrap rounded-full px-4 py-2 text-sm font-semibold transition-all duration-200 xl:px-5 ${
+                  isActive(item.href)
                     ? "bg-[#1F6B2B] !text-white shadow-md"
                     : "text-[#183D25] hover:bg-[#EAF5E7] hover:text-[#237A35]"
-                  }`}
+                }`}
               >
                 {item.label}
 
                 {item.children && (
                   <ChevronDown
                     size={15}
-                    className={`shrink-0 transition-transform duration-200 ${activeDropdown === item.label ? "rotate-180" : ""
-                      }`}
+                    className={`shrink-0 transition-transform duration-200 ${
+                      activeDropdown === item.label ? "rotate-180" : ""
+                    }`}
                   />
                 )}
               </Link>
@@ -145,8 +222,9 @@ export default function Navbar() {
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: 8 }}
                     transition={{ duration: 0.18 }}
-                    className={`absolute top-full z-[110] w-[260px] max-w-[calc(100vw-24px)] pt-2 ${index === navItems.length - 1 ? "right-0" : "left-0"
-                      }`}
+                    className={`absolute top-full z-[110] w-[260px] max-w-[calc(100vw-24px)] pt-2 ${
+                      index === navItems.length - 1 ? "right-0" : "left-0"
+                    }`}
                   >
                     <div className="overflow-hidden rounded-2xl border border-green-100 bg-white p-2 shadow-[0_15px_45px_rgba(24,61,37,0.16)]">
                       <div className="flex items-center gap-2 border-b border-green-100 px-3 py-2.5">
@@ -186,17 +264,26 @@ export default function Navbar() {
 
         {/* RIGHT ACTIONS */}
         <div className="flex items-center gap-1 sm:gap-2">
-          <button type="button" aria-label="Search" className={iconBtn}>
+          <button 
+            type="button" 
+            aria-label="Search" 
+            onClick={() => setSearchOpen(true)}
+            className={iconBtn}
+          >
             <Search size={21} />
           </button>
 
-          <Link
-            to="/account"
+          <button
+            type="button"
+            onClick={() => {
+              closeMenus();
+              navigate(isLoggedIn ? "/profile" : "/login");
+            }}
             aria-label="Account"
             className={`${iconBtn} hidden sm:flex`}
           >
             <User size={21} />
-          </Link>
+          </button>
 
           <Link to="/cart" aria-label="Cart" className={iconBtn}>
             <ShoppingCart size={21} />
@@ -208,8 +295,8 @@ export default function Navbar() {
             onClick={closeMenus}
             className="ml-2 hidden items-center gap-2 rounded-full bg-gradient-to-r from-green-900 to-green-700 px-6 py-2.5 text-sm font-bold text-white shadow-lg shadow-green-300/50 transition hover:scale-105 lg:flex"
           >
-             <span className="text-white"> Shop Now</span> 
-              <ArrowRight color="white" size={15} />
+            <span className="text-white"> Shop Now</span>
+            <ArrowRight color="white" size={15} />
           </Link>
 
           <button
@@ -241,10 +328,11 @@ export default function Navbar() {
                     <Link
                       to={item.href}
                       onClick={closeMenus}
-                      className={`rounded-full px-3 py-2 text-sm font-semibold transition-all ${isActive(item.href)
+                      className={`rounded-full px-3 py-2 text-sm font-semibold transition-all ${
+                        isActive(item.href)
                           ? "bg-[#1F6B2B] !text-white"
                           : "text-[#183D25]"
-                        }`}
+                      }`}
                     >
                       {item.label}
                     </Link>
@@ -263,8 +351,9 @@ export default function Navbar() {
                       >
                         <ChevronDown
                           size={17}
-                          className={`transition-transform ${activeDropdown === item.label ? "rotate-180" : ""
-                            }`}
+                          className={`transition-transform ${
+                            activeDropdown === item.label ? "rotate-180" : ""
+                          }`}
                         />
                       </button>
                     )}
@@ -300,11 +389,151 @@ export default function Navbar() {
                 onClick={closeMenus}
                 className="mt-3 flex items-center justify-center gap-2 rounded-full bg-gradient-to-r from-green-900 to-green-700 px-6 py-3 text-sm font-bold text-white shadow-lg"
               >
-             <span className="text-white"> Shop Now</span> 
-              <ArrowRight color="white" size={15} />
+                <span className="text-white"> Shop Now</span>
+                <ArrowRight color="white" size={15} />
+              </Link>
+
+              <Link
+                to={isLoggedIn ? "/profile" : "/login"}
+                onClick={closeMenus}
+                className="mt-2 flex items-center justify-center gap-2 rounded-full border-2 border-green-900 px-6 py-3 text-sm font-bold text-green-900 shadow-lg transition hover:bg-green-50"
+              >
+                <User size={18} />
+                <span>{isLoggedIn ? "My Profile" : "Login"}</span>
               </Link>
             </div>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* SEARCH MODAL */}
+      <AnimatePresence>
+        {searchOpen && (
+          <>
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setSearchOpen(false)}
+              className="fixed inset-0 z-[140] bg-black/30 backdrop-blur-sm"
+            />
+
+            {/* Search Modal */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: -10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: -10 }}
+              transition={{ duration: 0.2 }}
+              className="fixed left-1/2 top-20 z-[150] w-[90%] -translate-x-1/2 sm:w-[500px]"
+            >
+              <div className="overflow-hidden rounded-2xl border border-green-100 bg-white shadow-2xl">
+                {/* Search Input */}
+                <div className="border-b border-green-50 p-4">
+                  <div className="flex items-center gap-3 rounded-xl bg-green-50 px-4 py-3">
+                    <Search size={18} className="shrink-0 text-green-700" />
+                    <input
+                      ref={searchInputRef}
+                      type="text"
+                      placeholder="Search products, flavours, pages..."
+                      value={searchQuery}
+                      onChange={(e) => handleSearch(e.target.value)}
+                      className="w-full bg-transparent text-sm outline-none placeholder:text-green-600/50"
+                    />
+                    {searchQuery && (
+                      <button
+                        type="button"
+                        onClick={() => handleSearch("")}
+                        className="shrink-0 text-green-700 hover:text-green-900"
+                      >
+                        <X size={18} />
+                      </button>
+                    )}
+                  </div>
+                </div>
+
+                {/* Search Results */}
+                <div className="max-h-[60vh] overflow-y-auto">
+                  {searchResults.length > 0 ? (
+                    <div className="p-2">
+                      {/* Group results by category */}
+                      {Array.from(new Set(searchResults.map((r) => r.category))).map(
+                        (category) => (
+                          <div key={category} className="mb-4 last:mb-0">
+                            <div className="px-3 py-2">
+                              <span className="text-xs font-bold uppercase text-green-700">
+                                {category}
+                              </span>
+                            </div>
+
+                            {searchResults
+                              .filter((r) => r.category === category)
+                              .map((result) => {
+                                const IconComponent = result.icon;
+                                return (
+                                  <Link
+                                    key={result.id}
+                                    to={result.href}
+                                    onClick={() => handleSearchResultClick(result.href)}
+                                    className="group flex items-center gap-3 rounded-lg px-3 py-2.5 transition hover:bg-green-50"
+                                  >
+                                    <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-green-100 text-green-700 group-hover:bg-green-200">
+                                      <IconComponent size={16} />
+                                    </div>
+
+                                    <div className="flex-1">
+                                      <p className="text-sm font-semibold text-green-950">
+                                        {result.title}
+                                      </p>
+                                    </div>
+
+                                    <ArrowRight
+                                      size={14}
+                                      className="shrink-0 opacity-0 transition group-hover:translate-x-1 group-hover:opacity-100"
+                                    />
+                                  </Link>
+                                );
+                              })}
+                          </div>
+                        ),
+                      )}
+                    </div>
+                  ) : searchQuery ? (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <Search size={32} className="mb-3 text-green-200" />
+                      <p className="text-sm font-medium text-green-900">
+                        No results found for "{searchQuery}"
+                      </p>
+                      <p className="mt-1 text-xs text-green-700/60">
+                        Try searching for products or flavours
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="flex flex-col items-center justify-center py-12 text-center">
+                      <TrendingUp size={32} className="mb-3 text-green-200" />
+                      <p className="text-sm font-medium text-green-900">
+                        Popular searches
+                      </p>
+                      <div className="mt-4 flex flex-wrap justify-center gap-2">
+                        {["Neem Care", "Regular Pads", "Lavender Fresh", "Heavy Flow"].map(
+                          (tag) => (
+                            <button
+                              key={tag}
+                              type="button"
+                              onClick={() => handleSearch(tag)}
+                              className="rounded-full bg-green-100 px-3 py-1.5 text-xs font-semibold text-green-800 transition hover:bg-green-200"
+                            >
+                              {tag}
+                            </button>
+                          ),
+                        )}
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </motion.div>
+          </>
         )}
       </AnimatePresence>
     </header>

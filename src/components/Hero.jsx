@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import {
   ArrowRight,
@@ -92,7 +91,6 @@ export default function Hero() {
 
       {/* MAIN HERO CONTENT */}
       <div className="relative mx-auto grid min-h-[520px] max-w-[1500px] grid-cols-1 items-center gap-5 px-5 pb-8 pt-10 sm:px-8 lg:grid-cols-[0.85fr_1.1fr_1.2fr] lg:gap-2 lg:px-8 lg:pb-0 lg:pt-0">
-
         {/* LEFT WOMAN IMAGE */}
         <motion.div
           initial={{ opacity: 0, x: -60 }}
@@ -150,19 +148,19 @@ export default function Hero() {
 
           {/* DESCRIPTION */}
           <p className="mt-4 max-w-[420px] text-xs leading-6 text-[#34543A] sm:text-sm">
-            PadKINGO – India's Herbal Sanitary Pads with Nature's Care, Modern
+            PadKingoo – India's Herbal Sanitary Pads with Nature's Care, Modern
             Protection and Lasting Freshness.
           </p>
 
           {/* BUTTONS */}
           <div className="mt-5 flex flex-wrap items-center gap-3">
             <motion.a
-              href="/products"
+              href="/Survey"
               whileHover={{ scale: 1.05, y: -2 }}
               whileTap={{ scale: 0.96 }}
               className="flex items-center gap-2 rounded-full bg-gradient-to-r from-green-800 to-green-600 px-5 py-2.5 text-xs font-bold text-white shadow-lg shadow-green-300/50"
             >
-            <span className="text-white"> Shop Now</span> 
+              <span className="text-white"> Share Your Thoughts</span>
               <ArrowRight color="white" size={15} />
             </motion.a>
 
@@ -217,7 +215,7 @@ export default function Hero() {
 
           <motion.img
             src={heroDisplay}
-            alt="PadKINGO Herbal Sanitary Pads"
+            alt="PadKingoo Herbal Sanitary Pads"
             animate={{ y: [0, -10, 0] }}
             transition={{
               duration: 5,
@@ -241,9 +239,7 @@ export default function Hero() {
               <p className="text-[10px] font-extrabold text-green-900">
                 Herbal Care
               </p>
-              <p className="text-[9px] text-green-700">
-                Nature Inspired
-              </p>
+              <p className="text-[9px] text-green-700">Nature Inspired</p>
             </div>
           </motion.div>
 
@@ -259,7 +255,7 @@ export default function Hero() {
       </div>
 
       {/* HERBAL FLAVOURS STRIP */}
-              <HerbalFlavours />
+      <HerbalFlavours />
 
       {/* BOTTOM CURVE */}
       <div className="pointer-events-none absolute -bottom-12 left-[-5%] h-24 w-[110%] rounded-[50%] bg-[#F7FBF2]" />

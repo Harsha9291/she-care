@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Leaf, ArrowLeft, ArrowRight, Check, Star, Send } from "lucide-react";
+import { noTokenPostRequest } from "../Helpers/index";
 
 const questions = [
   {
@@ -67,7 +68,7 @@ const questions = [
   },
   {
     id: "rating",
-    title: "How do you like PadKINGOO?",
+    title: "How do you like PadKingoo?",
     subtitle: "Rate our brand and product concept.",
     type: "rating",
   },
@@ -124,27 +125,17 @@ export default function Survey() {
     }
 
     try {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_BASE_URL}survey/submit`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(answers),
-        },
-      );
+      const response = await noTokenPostRequest("survey/submit", answers);
 
-      if (!response.ok) {
-        throw new Error("Failed to submit survey");
+      if (response.status === 201 || response.status === 200) {
+        console.log("Survey submitted successfully");
+        setSubmitted(true);
+      } else {
+        throw new Error(response.data?.message || "Failed to submit survey");
       }
-
-      console.log("Survey submitted successfully");
     } catch (error) {
       console.error("Survey submission error:", error);
     }
-
-    setSubmitted(true);
   };
 
   const resetSurvey = () => {
@@ -187,7 +178,7 @@ export default function Survey() {
             </h3>
 
             <p className="mt-3 text-sm text-green-800/60">
-              Your feedback means a lot to PadKINGOO.
+              Your feedback means a lot to PadKingoo.
             </p>
 
             <button

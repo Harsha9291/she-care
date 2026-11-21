@@ -84,12 +84,12 @@ export default function WhyPadKINGOO() {
         >
           <span className="inline-flex items-center gap-2 rounded-full border border-green-200 bg-white px-4 py-2 text-xs font-bold uppercase tracking-[1.5px] text-[#43843A] shadow-sm">
             <Leaf size={16} strokeWidth={2} />
-            The PadKINGOO Difference
+            The PadKingoo Difference
           </span>
 
           <h2 className="mt-5 text-3xl font-extrabold leading-tight text-[#173D25] sm:text-4xl lg:text-5xl">
             Why Choose
-            <span className="text-[#69A849]"> PadKINGOO?</span>
+            <span className="text-[#69A849]"> PadKingoo?</span>
           </h2>
 
           <p className="mx-auto mt-4 max-w-2xl text-sm leading-7 text-gray-600 sm:text-base">
@@ -180,7 +180,7 @@ export default function WhyPadKINGOO() {
 
             <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-green-100/75 sm:text-base">
               Feel confident, stay informed, and make personal care
-              choices that work for you. PadKINGOO is here to support
+              choices that work for you. PadKingoo is here to support
               your everyday care journey.
             </p>
 

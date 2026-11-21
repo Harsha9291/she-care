@@ -97,9 +97,9 @@ export default function Learn() {
 
       {/* SECTION INTRO */}
       <div className="px-5 pb-10 pt-16 text-center sm:pt-20">
-        <span className="inline-flex items-center gap-2 rounded-full bg-[#E7F3DF] px-4 py-2 text-xs font-bold uppercase tracking-wider text-[#347A38]">
+        <span className="inline-flex items-center gap-2 rounded-full bg-[#E7F3DF] px-4 py-2 text-xs font-bold  tracking-wider text-[#347A38]">
           <BookOpen size={15} />
-          Learn With PadKINGO
+          Learn With PadKingoo
         </span>
 
         <h2 className="mx-auto mt-5 max-w-3xl text-3xl font-extrabold leading-tight text-[#173D25] sm:text-4xl lg:text-5xl">

@@ -18,6 +18,10 @@ import HerbalFlavours from "./components/HerbalFlavours";
 import BottomBenefits from "./components/BottomBenefits";
 import Learn from "./components/Learn";
 import FlavoursPage from "./components/FlavoursPage";
+import UserProfile from "./pages/UserProfile";
+import Login from "./pages/Login";
+import Cart from "./pages/Cart";
+import HomeProductsPreview from "./components/homePreviewProducts";
 
 export default function App() {
   return (
@@ -35,9 +39,9 @@ export default function App() {
 
               {/* Existing Herbal Landing Flavours */}
               {/* <HerbalFlavours /> */}
-
-              <Survey />
-
+ 
+              {/* <Survey /> */}
+<HomeProductsPreview />
               {/* <BottomBenefits/> */}
 
               {/* <WhyChooseUs /> */}
@@ -51,7 +55,10 @@ export default function App() {
             </>
           }
         />
-
+  <Route
+          path="/Survey"
+          element={<Survey />}
+        />
         {/* PRODUCTS PAGE */}
         <Route
           path="/products"
@@ -74,6 +81,24 @@ export default function App() {
         <Route
           path="/learn"
           element={<Learn />}
+        />
+
+        {/* PROFILE PAGE */}
+        <Route
+          path="/profile"
+          element={<UserProfile />}
+        />
+
+        {/* LOGIN PAGE */}
+        <Route
+          path="/login"
+          element={<Login />}
+        />
+
+        {/* CART PAGE */}
+        <Route
+          path="/cart"
+          element={<Cart />}
         />
       </Routes>
 

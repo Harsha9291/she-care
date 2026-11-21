@@ -9,14 +9,15 @@ const footerLinks = {
     { name: "Home", link: "#home" },
     { name: "Our Products", link: "#products" },
     { name: "Our Flavours", link: "#flavours" },
-    { name: "Why PadKINGOO", link: "#benefits" },
-    { name: "Customer Survey", link: "#survey" },
+    { name: "Why PadKingoo", link: "#benefits" },
+    // { name: "Customer Survey", link: "#survey" },
   ],
   "Our Products": [
     { name: "Neem Care", link: "#flavours" },
     { name: "Lavender Fresh", link: "#flavours" },
     { name: "Rose Soft", link: "#flavours" },
     { name: "Aloe Vera & Mint", link: "#flavours" },
+     { name: "Mint", link: "#flavours" },
   ],
   "Customer Support": [
     { name: "Contact Us", link: "#contact" },
@@ -82,7 +83,7 @@ export default function Footer() {
       ctx.fillStyle = "#103B23";
       ctx.font = "bold 48px Arial, sans-serif";
       ctx.textAlign = "center";
-      ctx.fillText("PadKINGOO", canvasSize / 2, padding + qrSize + 50);
+      ctx.fillText("PadKingoo", canvasSize / 2, padding + qrSize + 50);
 
       // Add subtitle
       ctx.font = "16px Arial, sans-serif";
@@ -114,14 +115,14 @@ export default function Footer() {
             <a href="#home" className="inline-block">
               <img
                 src={logo}
-                alt="PadKINGOO  Herbal Care"
+                alt="PadKingoo  Herbal Care"
                 className="h-12 w-auto max-w-[170px] object-contain rounded-md bg-white p-1"
               />
             </a>
 
             <p className="mt-3 max-w-[280px] text-sm leading-6 text-green-100/70">
               Nature-inspired care and comfort for every period. Discover
-              everyday period care with PadKINGOO .
+              everyday period care with PadKingoo .
             </p>
 
             <div className="mt-4 flex gap-2.5">
@@ -165,11 +166,11 @@ export default function Footer() {
         <div className="mt-7 flex flex-col gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex flex-wrap items-center gap-x-5 gap-y-2">
             <a
-              href="mailto:hello@PadKINGOO.com"
+              href="mailto:hello@PadKingoo.com"
               className="flex items-center gap-2 text-xs text-green-100/70 hover:text-white"
             >
               <Mail size={14} />
-              hello@PadKINGOO .com
+              hello@PadKingoo .com
             </a>
 
             <a
@@ -180,15 +181,15 @@ export default function Footer() {
               Contact Support
             </a>
 
-            <button
+            {/* <button
               onClick={handleDownloadQR}
               disabled={isDownloading}
               className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-[#B8E98A] to-[#A8D87A] px-5 py-2 text-xs font-bold text-[#103B23] shadow-lg transition hover:shadow-xl hover:scale-105 disabled:opacity-70"
-              title="Download QR code with PadKINGOO Survey"
+              title="Download QR code with PadKingoo Survey"
             >
               <Download size={16} />
               {isDownloading ? "Generating..." : "Download QR"}
-            </button>
+            </button> */}
           </div>
 
           <p className="flex items-center gap-1 text-xs text-green-100/70">
@@ -201,7 +202,7 @@ export default function Footer() {
         {/* Copyright */}
         <div className="mt-4 border-t border-white/10 pt-4 text-center">
           <p className="text-xs text-green-100/50">
-            © {new Date().getFullYear()} PadKINGOO. All Rights Reserved.
+            © {new Date().getFullYear()} PadKingoo. All Rights Reserved.
           </p>
         </div>
       </div>
